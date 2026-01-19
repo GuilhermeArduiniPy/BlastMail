@@ -17,8 +17,21 @@ class EmailListController extends Controller
      */
     public function index()
     {
+        $search = request()->search;
+        $emailList = EmailList::query()
+            ->when(
+                $search,
+                fn($query) =>
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('id', '=', $search)
+            )
+            ->paginate(10)
+            ->appends(compact('search'));
+
+
         return view('email-list.index', [
-            'emailLists' => EmailList::query()->paginate(),
+            'emailLists' => $emailList,
+            'search' => $search,
         ]);
     }
 

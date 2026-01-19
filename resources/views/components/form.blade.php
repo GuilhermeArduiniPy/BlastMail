@@ -6,7 +6,11 @@
 $method = $post ? 'post' : 'get';
 @endphp
 
-<form {{$attributes}} method="{{$method}}">
+<form {{$attributes->class(['gap-4 flex flex-col'])}} method="{{$method}}">
+    @if($method != 'get')
+    {
     @csrf
+    }
+    @endif
     {{ $slot }}
 </form>
