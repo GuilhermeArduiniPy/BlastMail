@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Pest\Support\Arr;
 use App\Models\EmailList;
 use Illuminate\Http\Request;
-use Symfony\Component\Mime\Email;
+use Illuminate\Http\UploadedFile;
+
+use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\throwException;
 
 class EmailListController extends Controller
 {
@@ -36,11 +40,30 @@ class EmailListController extends Controller
             'file' => 'required|file|mimes:csv',
         ]);
 
-        $file = $request->file('file');
+        $items = $this->getEmailsFromCsvFile($request->file('file'));
+
+        DB::transaction(function () use ($request, $items) {
+            $emailList = EmailList::query()->create([
+                'title' => $request['title'],
+            ]);
+            $emailList->subscribers()->createMany($items);
+        });
+        return to_route('email-list.index')->with('success', 'Email list created successfully.');
+    }
+
+
+
+
+    private function getEmailsFromCsvFile(UploadedFile $file): array
+    {
         $fileHandle = fopen($file->getRealPath(), 'r');
         $items = [];
 
         while (($row = fgetcsv($fileHandle, null, ',')) !== false) {
+
+            if ($row[0] === 'name' && $row[1] === 'email') {
+                continue; // Skip header row
+            }
             $items[] = [
                 'name' => $row[0],
                 'email' => $row[1],
@@ -48,16 +71,8 @@ class EmailListController extends Controller
         }
 
         fclose($fileHandle);
-
-        $emailList = EmailList::query()->create([
-            'title' => $request['title'],
-        ]);
-
-        $emailList->subscribers()->createMany($items);
-
-        return to_route('email-list.index')->with('success', 'Email list created successfully.');
+        return $items;
     }
-
     /**
      * Display the specified resource.
      */
