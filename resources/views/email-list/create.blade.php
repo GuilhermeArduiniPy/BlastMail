@@ -3,7 +3,7 @@
         {{ __('Email Lists') }} > {{ __('Create a new list') }}
     </x-h2>
     <x-card>
-        <x-form :action="route('email-list.store')" post>
+        <x-form :action="route('email-list.store')" post enctype="multipart/form-data">
             <div class="space-y-4">
                 <div>
                     <flux:input
@@ -20,6 +20,7 @@
                         name="file"
                         :label="__('List File')"
                         type="file"
+                        accept=".csv"
                         autofocus
                         placeholder="Title" />
                 </div>
