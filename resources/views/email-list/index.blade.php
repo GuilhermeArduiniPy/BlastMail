@@ -1,6 +1,6 @@
 <x-layouts::app :title="__('Email List')">
     <x-card class="space-y-4">
-
+        <h2>{{__('Email List')}}</h2>
         @unless ($emailLists->isEmpty() && blank($search))
         <div class="flex justify-between h-20">
             <x-link-button href=" {{ route('email-list.create') }}">
@@ -28,7 +28,11 @@
                     <x-table.td>{{ $list->id }}</x-table.td>
                     <x-table.td>{{ $list->title }}</x-table.td>
                     <x-table.td>{{ $list->subscribers_count }}</x-table.td>
-                    <x-table.td>//</x-table.td>
+                    <x-table.td>
+                        <x-link-button :href="route('subscribers.index', $list)">
+                            Subscribers
+                        </x-link-button>
+                    </x-table.td>
                 </tr>
                 @endforeach
             </x-slot>
