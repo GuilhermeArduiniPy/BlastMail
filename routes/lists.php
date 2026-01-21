@@ -9,3 +9,4 @@ Route::get('/email-list/create', [App\Http\Controllers\EmailListController::clas
 Route::post('/email-list/create', [App\Http\Controllers\EmailListController::class, 'store'])->name('email-list.store');
 Route::get('email-list/{emailList}/subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
 Route::get('email-list/{emailList}/subscribers/create', fn() => '')->name('subscribers.create');
+Route::delete('email-list/{emailList}/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
