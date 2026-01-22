@@ -2,7 +2,7 @@
     <x-card class="space-y-4">
         <h2>{{__('Email List') }} > {{__($emailList->title)}} > {{__('Subscribers')}}</h2>
 
-        <div class="flex justify-between h-30">
+        <div class="flex justify-between h-25">
             <x-link-button href=" {{ route('subscribers.create', $emailList) }}">
                 {{ __('Add a new subscriber') }}
             </x-link-button>
@@ -42,7 +42,13 @@
                             delete flat onsubmit="return confirm('{{ __('Are you sure?') }}')">
                             <x-button>Delete</x-button>
                         </x-form>
+                        @else
+                        <flux:badge color="red">
+                            Deleted
+                        </flux:badge>
+
                         @endunless
+
                     </x-table.td>
                 </tr>
                 @endforeach
