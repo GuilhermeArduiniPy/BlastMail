@@ -21,6 +21,9 @@
                 <flux:sidebar.item icon="home" :href="route('email-list.index')" :current="request()->routeIs('email-list.*')" wire:navigate>
                     {{ __('Email List') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="home" :href="route('template.index')" :current="request()->routeIs('template.index')" wire:navigate>
+                    {{ __('Templates') }}
+                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 

@@ -2,19 +2,26 @@
 'post' => null,
 'flat' => false,
 'delete' => null,
+'put' => null
 ])
 
 @php
-$method = $post || $delete ? 'post' : 'get';
+$method =( $post or $delete or $put) ? 'post' : 'get';
 
 @endphp
 
-<form {{$attributes->class(['gap-4 flex flex-col' => !$flat]) }} method="{{$method}}">
+<form method="{{$method}}" {{ $attributes->merge(['class' => !$flat ? 'gap-4 flex flex-col' : '']) }} >
     @if($method != 'get')
-    @csrf
+      @csrf
     @endif
+
     @if($delete)
-    @method('Delete')
+            @method('Delete')
     @endif
+
+    @if($put)
+        @method('PUT')
+    @endif
+
     {{ $slot }}
 </form>

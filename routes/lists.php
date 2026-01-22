@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -11,3 +12,7 @@ Route::get('email-list/{emailList}/subscribers', [SubscriberController::class, '
 Route::get('email-list/{emailList}/subscribers/create', [SubscriberController::class, 'create'])->name('subscribers.create');
 Route::post('email-list/{emailList}/subscribers/create', [SubscriberController::class, 'store']);
 Route::delete('email-list/{emailList}/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
+
+Route::resource('template', TemplateController::class);
+//Quandor criamos com resource, e so fazer a rota assim que ele ja
+// cria automaticamente as rotas.
