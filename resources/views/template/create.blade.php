@@ -16,7 +16,7 @@
                 </div>
 
                 <div>
-                    <flux:input
+                    <flux:textarea
                         name="body"
                         :label="__('Body')"
                         type="text"

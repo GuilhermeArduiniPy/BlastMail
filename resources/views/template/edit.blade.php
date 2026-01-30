@@ -1,6 +1,6 @@
 <x-layouts::app :title="__('Email List')">
     <x-h2>
-        {{ __('Templates') }} > __{{$template->name}} >{{ __('Update Template') }}
+        {{ __('Templates') }} > {{__($template->name)}} >{{ __('Update Template') }}
     </x-h2>
     <x-card>
         <x-form :action="route('template.update', $template )" put>
