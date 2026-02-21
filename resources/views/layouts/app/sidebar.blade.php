@@ -24,6 +24,9 @@
                 <flux:sidebar.item icon="home" :href="route('template.index')" :current="request()->routeIs('template.index')" wire:navigate>
                     {{ __('Templates') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="home" :href="route('campaigns.index')" :current="request()->routeIs('campaigns.*')" wire:navigate>
+                    {{ __('Campaigns') }}
+                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 

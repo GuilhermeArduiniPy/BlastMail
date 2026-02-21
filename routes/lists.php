@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/email-list', [App\Http\Controllers\EmailListController::class, 'index'])->name('email-list.index');
 Route::get('/email-list/create', [App\Http\Controllers\EmailListController::class, 'create'])->name('email-list.create');
@@ -14,5 +14,7 @@ Route::post('email-list/{emailList}/subscribers/create', [SubscriberController::
 Route::delete('email-list/{emailList}/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
 
 Route::resource('template', TemplateController::class);
-//Quandor criamos com resource, e so fazer a rota assim que ele ja
+
+Route::resource('campaigns', CampaignController::class)->only(['index']);
+// Quandor criamos com resource, e so fazer a rota assim que ele ja
 // cria automaticamente as rotas.

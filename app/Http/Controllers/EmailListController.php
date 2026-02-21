@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Pest\Support\Arr;
 use App\Models\EmailList;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-
 use Illuminate\Support\Facades\DB;
-use function PHPUnit\Framework\throwException;
 
 class EmailListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $search = request()->search;
@@ -22,13 +16,11 @@ class EmailListController extends Controller
             ->withCount('subscribers')
             ->when(
                 $search,
-                fn($query) =>
-                $query->where('title', 'like', '%' . $search . '%')
+                fn ($query) => $query->where('title', 'like', '%'.$search.'%')
                     ->orWhere('id', '=', $search)
             )
             ->paginate(10)
             ->appends(compact('search'));
-
 
         return view('email-list.index', [
             'emailLists' => $emailList,
@@ -62,11 +54,9 @@ class EmailListController extends Controller
             ]);
             $emailList->subscribers()->createMany($items);
         });
+
         return to_route('email-list.index')->with('success', 'Email list created successfully.');
     }
-
-
-
 
     private function getEmailsFromCsvFile(UploadedFile $file): array
     {
@@ -85,8 +75,10 @@ class EmailListController extends Controller
         }
 
         fclose($fileHandle);
+
         return $items;
     }
+
     /**
      * Display the specified resource.
      */
